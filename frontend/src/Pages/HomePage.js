@@ -30,7 +30,7 @@ const HomePage = () => {
           fontFamily="Varela "
           color={"tomato"}
         >
-          Messanger
+          Messenger
         </Text>
       </Box>
       <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
