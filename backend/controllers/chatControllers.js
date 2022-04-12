@@ -90,4 +90,81 @@ const createGroupChat = expressAsyncHandler(async (req, res) => {
     throw new Error(error.message);
   }
 });
-module.exports = { accessChat, fetchChat, createGroupChat };
+const renameGroup = expressAsyncHandler(async (req, res) => {
+  const { chatId, chatName } = req.body;
+
+  const updatedChat = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      chatName: chatName,
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!updatedChat) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(updatedChat);
+  }
+});
+const addToGroup = expressAsyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
+
+  // check if the requester is admin
+
+  const added = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $push: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!added) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(added);
+  }
+});
+const removeFromGroup = expressAsyncHandler(async (req, res) => {
+  const { chatId, userId } = req.body;
+
+  // check if the requester is admin
+
+  const removed = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    {
+      new: true,
+    }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!removed) {
+    res.status(404);
+    throw new Error("Chat Not Found");
+  } else {
+    res.json(removed);
+  }
+});
+module.exports = {
+  accessChat,
+  fetchChat,
+  createGroupChat,
+  renameGroup,
+  addToGroup,
+  removeFromGroup,
+};
