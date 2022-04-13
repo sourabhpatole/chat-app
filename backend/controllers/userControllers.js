@@ -23,7 +23,7 @@ const registerUser = expressAsyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
-      email: user.name,
+      email: user.email,
       pic: user.pic,
       token: genToken(user._id),
     });
@@ -41,7 +41,7 @@ const authUser = expressAsyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user._id,
       name: user.name,
-      email: user.name,
+      email: user.email,
       pic: user.pic,
       token: genToken(user._id),
     });
