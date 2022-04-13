@@ -64,7 +64,7 @@ const GroupChatModal = ({ children }) => {
       setSearchResult(data);
     } catch (error) {
       toast({
-        title: "Error Occured!",
+        title: "Error Occurred!",
         description: "Failed to Load the Search Results",
         status: "error",
         duration: 5000,
@@ -151,7 +151,7 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Piyush, Jane"
+                placeholder="Add Users eg: John, Sourabh, Jane"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
